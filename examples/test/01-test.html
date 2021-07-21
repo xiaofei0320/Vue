@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>初始化流程</p>
+        <p id="p1">{{ foo }}</p>
+        <p v-if="isFolder" v-for="child in children">{{ child.title }}</p>
+        <p>{{ obj.key }}</p>
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    foo: '哈哈',
+                    value: 'value',
+                    obj: {
+                        key: 'key'
+                    },
+                    children: [
+                        {title: 'foo'},
+                        {title: 'bar'}
+                    ]
+                }
+            },
+            computed: {
+                isFolder() {
+                    return this.children && this.children.length > 0
+                }
+            },
+            mounted() {
+                this.foo = Math.random()
+                console.log('1:' + this.foo);
+                this.foo = Math.random()
+                console.log('2:' + this.foo);
+                this.foo = Math.random()
+                console.log('3:' + this.foo);
+                // 异步行为，此时内容没变
+                console.log('p1.innerHTML:' + p1.innerHTML)
+
+                this.$nextTick(() => {
+                    // 这里才是最新的值
+                    console.log('p1.innerHTML:' + p1.innerHTML)
+                })
+            }
+        })
+    </script>
+</body>
+</html>
